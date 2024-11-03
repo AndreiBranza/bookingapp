@@ -10,6 +10,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import com.braziigemeni.bookingapp.model.User;
 import com.braziigemeni.bookingapp.repository.UserRepository;
 import com.braziigemeni.bookingapp.service.UserService;
+import com.braziigemeni.bookingapp.util.JwtTokenProvider;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -19,6 +20,7 @@ public class BookingappApplication {
 
 	@Autowired private UserRepository userRepository;
 	@Autowired private PasswordEncoder passwordEncoder;
+	@Autowired private JwtTokenProvider tokenProvider;
 
 	public static void main(String[] args) {
 		SpringApplication.run(BookingappApplication.class, args);
@@ -28,7 +30,7 @@ public class BookingappApplication {
 	public void testDatabaseConnection() {
 		try {
 			log.info("Testing database connection...");
-			UserService userService = new UserService(userRepository, passwordEncoder);
+			UserService userService = new UserService(userRepository, passwordEncoder, tokenProvider);
 
 			User testUser = new User();
 			testUser.setEmail("test@test.com");
